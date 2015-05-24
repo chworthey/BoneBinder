@@ -6,7 +6,7 @@ BoneBinderEngine::BoneBinderEngine()
 
 }
 
-EngineInitialSettings BoneBinderEngine::Initialize(EngineInitialSettings settingsDefault)
+EngineInitialSettings BoneBinderEngine::Initialize(EngineInitialSettings settingsDefault) 
 {
 	settingsDefault.SetWindowTitle("Bone Binder");
 	return settingsDefault;
