@@ -1,32 +1,27 @@
 #include "Engine.h"
-#include "DisplayWindow.h"
 #include <GL/glew.h>
-#include <time.h>
 #include "Time.h"
+#include "Model.h"
+#include <iostream>
 
-Engine::Engine()
-: mTime(0.0)
+Engine::Engine(EngineInitialSettings settings)
+: mTime(0.0),
+mContentManager(),
+mShaderManager(),
+mRenderer(mShaderManager),
+mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindowTitle())
 {
-}
-
-EngineInitialSettings Engine::Initialize(EngineInitialSettings settingsDefault)
-{
-	return settingsDefault;
 }
 
 void Engine::Run()
 {
 	double previousTime = GetCurrentTime();
 	double lag = 0.0;
-
-	EngineInitialSettings settings = Initialize(EngineInitialSettings("Engine", 800, 600));
-
-	DisplayWindow window(800, 600, "Bone Binder");
+	double startTime = previousTime;
 
 	// Implement engine loop with fixed update time step, and variable time stepped rendering
 	// Has 1 frame delay to ensure smooth rendering (interpolation-only)
-
-	while (!window.IsClosed())
+	while (!mWindow.IsClosed())
 	{           
 		double currentTime = GetCurrentTime();
 		double deltaTime = currentTime - previousTime;
@@ -41,20 +36,37 @@ void Engine::Run()
 
 		while (lag >= kElapsedUpdateTime)
 		{
-			Update(kElapsedUpdateTime);
+			
+			Time t(GetCurrentTime() - startTime, kElapsedUpdateTime);
+
+			try
+			{
+				Update(t);
+			}
+			catch (EngineException &e)
+			{
+				mWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+			}
 			lag -= kElapsedUpdateTime;
 		}
 		
-		Draw(lag / kElapsedUpdateTime);
+		try
+		{
+			Draw(lag / kElapsedUpdateTime);
+		}
+		catch (EngineException &e)
+		{
+			mWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+		}
 
-		window.SwapBuffers();
-		window.UpdateClosed();
+		mWindow.SwapBuffers();
+		mWindow.UpdateClosed();
 	}
 }
 
 double Engine::GetCurrentTime() const
 {
-	return (double)time(NULL);
+	return mWindow.GetTicks() / 1000.0;
 }
 
 void Engine::processInput()

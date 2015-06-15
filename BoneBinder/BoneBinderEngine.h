@@ -2,14 +2,22 @@
 
 #include "Engine.h"
 #include "EngineInitialSettings.h"
+#include "Shader.h"
+#include "Camera.h"
+#include "Model.h"
+#include "Time.h"
 
 class BoneBinderEngine : public Engine
 {
-public:
-	BoneBinderEngine();
+private:
+	Shader mShader;
+	Camera mCamera;
+	Model mTestModel;
 
-	EngineInitialSettings Initialize(EngineInitialSettings settingsDefault) override;
-	void Update(double deltaTime) override;
+public:
+	BoneBinderEngine(EngineInitialSettings settings);
+
+	void Update(const Time &engineTime) override;
 	void Draw(double alpha) override;
 };
 

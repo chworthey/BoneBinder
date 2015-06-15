@@ -5,9 +5,32 @@
 #include <GL/glew.h>
 #include <iostream>
 
-DisplayWindow::DisplayWindow(int width, int height, const std::string &title) 
-	: mWindow(), 
-	mIsClosed(false)
+DisplayWindow::~DisplayWindow()
+{
+	SDL_GL_DeleteContext(mGLContext);
+	SDL_DestroyWindow(mWindow);
+	SDL_Quit();
+}
+
+int DisplayWindow::GetWidth() const
+{
+	return mWidth;
+}
+
+int DisplayWindow::GetHeight() const
+{
+	return mHeight;
+}
+
+float DisplayWindow::GetApectPixelRatio() const
+{
+	return mWidth / (float)mHeight;
+}
+
+DisplayWindow::DisplayWindow(int width, int height, const std::string &title)
+: mIsClosed(false),
+mWidth(width),
+mHeight(height)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -26,16 +49,8 @@ DisplayWindow::DisplayWindow(int width, int height, const std::string &title)
 
 	if (status != GLEW_OK)
 	{
-		std::cerr << "Glew failed to initialize!" << std::endl;
+		ShowNotificationMessageBox("Glew failed to initialize.", MessageType::ERROR_MESSAGE_TYPE);
 	}
-}
-
-
-DisplayWindow::~DisplayWindow()
-{
-	SDL_GL_DeleteContext(mGLContext);
-	SDL_DestroyWindow(mWindow);
-	SDL_Quit();
 }
 
 void DisplayWindow::SwapBuffers()
@@ -54,4 +69,39 @@ void DisplayWindow::UpdateClosed()
 			mIsClosed = true;
 		}
 	}
+}
+
+Uint32 DisplayWindow::GetTicks() const
+{
+	return SDL_GetTicks();
+}
+
+void DisplayWindow::ShowNotificationMessageBox(std::string message, MessageType type)
+{
+	Uint32 flags;
+	std::string title;
+	if (type == INFORMATION_MESSAGE_TYPE)
+	{
+		flags = SDL_MESSAGEBOX_INFORMATION;
+		title = "Information";
+	}
+	else if (type == WARNING_MESSAGE_TYPE)
+	{
+		flags = SDL_MESSAGEBOX_WARNING;
+		title = "Warning";
+	}
+	else if (type == ERROR_MESSAGE_TYPE)
+	{
+		flags = SDL_MESSAGEBOX_ERROR;
+		title = "Error";
+	}
+	else
+		return;
+
+	SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), mWindow);
+}
+
+DisplayWindow DisplayWindow::operator=(const DisplayWindow &rhs)
+{
+	return std::move(rhs);
 }

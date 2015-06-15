@@ -11,7 +11,7 @@ private:
 	int mWindowHeight;
 
 public:
-	ENGINE_API EngineInitialSettings(std::string windowTitle, int windowWidth, int windowHeight);
+	ENGINE_API EngineInitialSettings();
 
 	ENGINE_API std::string GetWindowTitle();
 	ENGINE_API void SetWindowTitle(std::string windowTitle);

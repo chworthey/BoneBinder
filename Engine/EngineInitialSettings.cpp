@@ -1,9 +1,9 @@
 #include "EngineInitialSettings.h"
 
-EngineInitialSettings::EngineInitialSettings(std::string windowTitle, int windowWidth, int windowHeight)
-	: mWindowTitle(windowTitle),
-	mWindowWidth(windowWidth),
-	mWindowHeight(windowHeight)
+EngineInitialSettings::EngineInitialSettings()
+	: mWindowTitle("Engine"),
+	mWindowWidth(800),
+	mWindowHeight(600)
 {
 }
 
