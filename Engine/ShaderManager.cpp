@@ -10,12 +10,12 @@ ShaderManager::~ShaderManager()
 {
 }
 
-void ShaderManager::SetCurrentShader(Shader *shader)
+void ShaderManager::SetCurrentShader(ShaderGLWrapper *shader)
 {
 	mCurrentShader = shader;
 }
 
-Shader *ShaderManager::GetCurrentShader()
+ShaderGLWrapper *ShaderManager::GetCurrentShader()
 {
 	return mCurrentShader;
 }

@@ -4,7 +4,7 @@
 Model PrimitivesHelper::CreateTriangle(glm::vec3 a, glm::vec3 b, glm::vec3 c)
 {
 	Model triModel;
-	std::unique_ptr<Mesh> triMesh = std::unique_ptr<Mesh>(new Mesh());
+	std::unique_ptr<MeshGLWrapper> triMesh = std::unique_ptr<MeshGLWrapper>(new MeshGLWrapper());
 
 	Vertex vertices[3];
 	vertices[0] = Vertex(a);

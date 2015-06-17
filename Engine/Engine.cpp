@@ -6,8 +6,8 @@
 
 Engine::Engine(EngineInitialSettings settings)
 : mTime(0.0),
-mContentManager(),
 mShaderManager(),
+mContentManager(mShaderManager),
 mRenderer(mShaderManager),
 mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindowTitle())
 {

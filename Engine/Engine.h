@@ -14,16 +14,14 @@ class Engine : public IUpdateable, public IDrawable
 private:
 	const double kElapsedUpdateTime = 0.01;
 	double mTime;
-	ContentManager mContentManager;
 	ShaderManager mShaderManager;
+	ContentManager mContentManager;
 	Renderer mRenderer;
 	DisplayWindow mWindow;
 
 public:
 	ENGINE_API Engine(EngineInitialSettings settings);
 	ENGINE_API void Run();
-
-	ShaderManager &GetShaderManager() { return mShaderManager; }
 
 protected:
 	ENGINE_API double GetCurrentTime() const;

@@ -6,7 +6,7 @@
 #include "Vertex.h"
 #include <GL/glew.h>
 
-class Mesh
+class MeshGLWrapper
 {
 private:
 	enum VertexBuffers
@@ -22,13 +22,13 @@ private:
 
 public:
 	 void Initialize(Vertex *vertices, unsigned int numVertices);
-	 Mesh() {}
-	 ~Mesh();
+	 MeshGLWrapper() {}
+	 ~MeshGLWrapper();
 
 	void Draw() const;
 
 private:
-	Mesh(const Mesh &other);
-	void operator=(const Mesh &other) {}
+	MeshGLWrapper(const MeshGLWrapper &other);
+	void operator=(const MeshGLWrapper &other) {}
 };
 

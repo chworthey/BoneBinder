@@ -1,7 +1,7 @@
-#include "Mesh.h"
+#include "MeshGLWrapper.h"
 #include "Assert.h"
 
-void Mesh::Initialize(Vertex *vertices, unsigned int numVertices)
+void MeshGLWrapper::Initialize(Vertex *vertices, unsigned int numVertices)
 {
 	Assert(vertices);
 
@@ -21,12 +21,12 @@ void Mesh::Initialize(Vertex *vertices, unsigned int numVertices)
 	glBindVertexArray(0);
 }
 
-Mesh::~Mesh()
+MeshGLWrapper::~MeshGLWrapper()
 {
 	glDeleteVertexArrays(1, &mVertexArrayObject);
 }
 
-void Mesh::Draw() const
+void MeshGLWrapper::Draw() const
 {
 	glBindVertexArray(mVertexArrayObject);
 

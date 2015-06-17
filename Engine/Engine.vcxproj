@@ -92,11 +92,12 @@
     <ClInclude Include="EngineInitialSettings.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshGLWrapper.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PrimitivesHelper.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderGLWrapper.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Vertex.h" />
@@ -109,11 +110,12 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineException.cpp" />
     <ClCompile Include="EngineInitialSettings.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshGLWrapper.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="PrimitivesHelper.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderGLWrapper.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vertex.cpp" />

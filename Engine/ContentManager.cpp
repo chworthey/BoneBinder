@@ -4,16 +4,16 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-ContentManager::ContentManager()
+ContentManager::ContentManager(ShaderManager &shaderManager)
+: mShaderManager(shaderManager)
 {
 }
-
 
 ContentManager::~ContentManager()
 {
 }
 
-ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string path)
+ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string path) const
 {
 	std::vector<Model> models;
 
@@ -67,6 +67,11 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 	}
 
 	return models;
+}
+
+Shader ContentManager::LoadShaderFromFile(std::string path) const
+{
+	return Shader(path, mShaderManager);
 }
 
 void ContentManager::throwLoadException(std::string message) const

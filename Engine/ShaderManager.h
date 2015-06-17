@@ -2,18 +2,18 @@
 
 #include "EngineDLL.h"
 
-class Shader;
+class ShaderGLWrapper;
 
 class ShaderManager
 {
 private:
-	Shader *mCurrentShader;
+	ShaderGLWrapper *mCurrentShader;
 
 public:
 	ENGINE_API ShaderManager();
 	ENGINE_API ~ShaderManager();
 
-	ENGINE_API void SetCurrentShader(Shader *shader);
-	ENGINE_API Shader *GetCurrentShader();
+	ENGINE_API void SetCurrentShader(ShaderGLWrapper *shader);
+	ENGINE_API ShaderGLWrapper *GetCurrentShader();
 };
 

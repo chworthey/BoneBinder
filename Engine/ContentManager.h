@@ -4,16 +4,22 @@
 #include <string>
 #include "EngineException.h"
 #include <vector>
+#include "Shader.h"
+#include "ShaderManager.h"
 
 class Model;
 
 class ContentManager
 {
+private:
+	ShaderManager &mShaderManager;
+
 public:
-	ContentManager();
+	ContentManager(ShaderManager &shaderManager);
 	ENGINE_API ~ContentManager();
 
-	ENGINE_API std::vector<Model> LoadModelsFromFile(std::string path);
+	ENGINE_API std::vector<Model> LoadModelsFromFile(std::string path) const;
+	ENGINE_API Shader LoadShaderFromFile(std::string path) const;
 
 private:
 	void throwLoadException(std::string message) const;

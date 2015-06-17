@@ -6,7 +6,7 @@
 
 BoneBinderEngine::BoneBinderEngine(EngineInitialSettings settings)
 : Engine(settings),
-mShader("./Resources/basicShader", GetShaderManager()),
+mShader(GetContentManager().LoadShaderFromFile("./Resources/basicShader")),
 
 mCamera(
 	glm::vec3(0.0f, 0.0f, -3.0f), 
