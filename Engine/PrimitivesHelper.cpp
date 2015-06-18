@@ -1,18 +1,26 @@
 #include "PrimitivesHelper.h"
 
+#include "Vertex.h"
+#include <vector>
+#include <memory>
 
-Model PrimitivesHelper::CreateTriangle(glm::vec3 a, glm::vec3 b, glm::vec3 c)
+Model PrimitivesHelper::CreateTriangle(Vertex a, Vertex b, Vertex c)
 {
 	Model triModel;
-	std::unique_ptr<MeshGLWrapper> triMesh = std::unique_ptr<MeshGLWrapper>(new MeshGLWrapper());
+	std::shared_ptr<MeshGLWrapper> triMesh = std::shared_ptr<MeshGLWrapper>(new MeshGLWrapper());
 
-	Vertex vertices[3];
-	vertices[0] = Vertex(a);
-	vertices[1] = Vertex(b);
-	vertices[2] = Vertex(c);
+	std::vector<Vertex> vertices;
+	vertices.push_back(a);
+	vertices.push_back(b);
+	vertices.push_back(c);
 
-	triMesh->Initialize(vertices, 3);
-	triModel.AddMesh(std::move(triMesh));
+	std::vector<unsigned int> indices;
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+
+	triMesh->Initialize(vertices, indices);
+	triModel.AddMesh(triMesh);
 
 	return triModel;
 }

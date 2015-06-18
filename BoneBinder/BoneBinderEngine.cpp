@@ -6,7 +6,7 @@
 
 BoneBinderEngine::BoneBinderEngine(EngineInitialSettings settings)
 : Engine(settings),
-mShader(GetContentManager().LoadShaderFromFile("./Resources/basicShader")),
+mShader(GetContentManager().LoadShaderFromFile("./Resources/breakVisualizerShader")),
 
 mCamera(
 	glm::vec3(0.0f, 0.0f, -3.0f), 
@@ -15,10 +15,7 @@ mCamera(
 	GetDisplayWindow()),
 
 mTestModel(
-	PrimitivesHelper::CreateTriangle(
-		glm::vec3(-0.5f, 0.0f, 0.0), 
-		glm::vec3(0.0f, 0.5f, 0.0f),
-		glm::vec3(0.5f, -0.5f, 0.0f)))
+	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0])
 {
 }
 
@@ -33,8 +30,14 @@ void BoneBinderEngine::Update(const Time &engineTime)
 
 void BoneBinderEngine::Draw(double alpha)
 {
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
 	glClearColor(0.0f, 0.0f, 0.0, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glClearDepth(1.0f);
+	glClear(GL_DEPTH_BUFFER_BIT);
+
 	mShader.Bind();
 
 	GetRenderer().Render(mTestModel, mCamera);

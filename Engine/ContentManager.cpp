@@ -1,9 +1,14 @@
+#include "Assert.h"
 #include "ContentManager.h"
 #include "Model.h" 
+#include "MeshGLWrapper.h"
 #include "ShaderManager.h"
+#include "Vertex.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <memory>
+#include <glm/glm.hpp>
 
 ContentManager::ContentManager(ShaderManager &shaderManager)
 : mShaderManager(shaderManager)
@@ -57,12 +62,52 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 			throwLoadException("Mesh " + meshName + " has no positions.");
 		}
 
-		if (!mesh->HasNormals())
+		Model model;
+
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+
+		aiColor4D *vertexColors = nullptr;
+		bool hasVertexColors = false;
+		for (unsigned int n = 0; n < AI_MAX_NUMBER_OF_COLOR_SETS; n++)
 		{
-			throwLoadException("Mesh " + meshName + " has no normals.");
+			if (mesh->HasVertexColors(n))
+			{
+				hasVertexColors = true;
+				vertexColors = mesh->mColors[n];
+				break;
+			}
 		}
 
-		Model model;
+		for (unsigned int n = 0; n < mesh->mNumVertices; n++)
+		{
+			aiVector3D &pos = mesh->mVertices[n];
+
+			glm::vec3 col(1.0f, 1.0f, 1.0f);
+			if (hasVertexColors)
+			{
+				aiColor4D &vc = vertexColors[n];
+				col = glm::vec3(vc.r, vc.g, vc.b);
+			}
+
+			vertices.push_back(Vertex(
+				glm::vec3(pos.x, pos.y, pos.z),
+				col));
+		}
+
+		for (unsigned int n = 0; n < mesh->mNumFaces; n++)
+		{
+			aiFace &f = mesh->mFaces[n];
+			Assert(f.mNumIndices == 3, "Face number of indices != 3.");
+			for (unsigned int i = 0; i < 3; i++)
+				indices.push_back(f.mIndices[i]);
+		}
+
+		std::shared_ptr<MeshGLWrapper> targetMesh = std::shared_ptr<MeshGLWrapper>(new MeshGLWrapper());
+
+		targetMesh->Initialize(vertices, indices);
+
+		model.AddMesh(targetMesh);
 
 		models.push_back(model);
 	}

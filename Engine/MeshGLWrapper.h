@@ -12,16 +12,20 @@ private:
 	enum VertexBuffers
 	{
 		POSITION_VERTEX_BUFFER,
-
+		COLOR_VERTEX_BUFFER,
 		NUM_VERTEX_BUFFERS
 	};
 
 	GLuint mVertexArrayObject;
 	GLuint mVertexBufferObjects[NUM_VERTEX_BUFFERS];
-	unsigned int mDrawCount;
+
+	GLuint mIndexBuffer;
+
+	unsigned int mVertexCount;
+	unsigned int mIndexCount;
 
 public:
-	 void Initialize(Vertex *vertices, unsigned int numVertices);
+	 void Initialize(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
 	 MeshGLWrapper() {}
 	 ~MeshGLWrapper();
 
@@ -31,4 +35,3 @@ private:
 	MeshGLWrapper(const MeshGLWrapper &other);
 	void operator=(const MeshGLWrapper &other) {}
 };
-
