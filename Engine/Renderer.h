@@ -1,10 +1,10 @@
 #pragma once
 
 #include "EngineDLL.h"
-#include "ShaderManager.h"
 
 class Model;
 class Camera;
+class ShaderManager;
 
 class Renderer
 {

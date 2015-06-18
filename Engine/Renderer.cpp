@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "ShaderManager.h"
 #include <glm/glm.hpp>
 
 

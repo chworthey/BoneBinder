@@ -2,6 +2,7 @@
 
 #include "EngineDLL.h"
 #include "MeshGLWrapper.h"
+#include <memory>
 #include <vector>
 #include "glm/glm.hpp"
 

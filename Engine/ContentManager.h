@@ -5,9 +5,9 @@
 #include "EngineException.h"
 #include <vector>
 #include "Shader.h"
-#include "ShaderManager.h"
 
 class Model;
+class ShaderManager;
 
 class ContentManager
 {

@@ -4,7 +4,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "EngineException.h"
-#include "ShaderManager.h"
+
+class ShaderManager;
 
 class ShaderGLWrapper
 {
