@@ -15,11 +15,11 @@ private:
 #if USE_PHYSICS_OPTIMIZED_ENGINE
 	const double kElapsedUpdateTime = 0.01;
 #endif
+	DisplayWindow mWindow;
 	double mTime;
 	ShaderManager mShaderManager;
 	ContentManager mContentManager;
 	Renderer mRenderer;
-	DisplayWindow mWindow;
 
 public:
 	ENGINE_API Engine(EngineInitialSettings settings);

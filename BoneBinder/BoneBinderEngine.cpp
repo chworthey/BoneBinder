@@ -38,7 +38,8 @@ void BoneBinderEngine::Draw()
 	glClearDepth(1.0f);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	mShader.Bind();
+	if (mShader)
+		mShader->Bind();
 
 	GetRenderer().Render(mTestModel, mCamera);
 }

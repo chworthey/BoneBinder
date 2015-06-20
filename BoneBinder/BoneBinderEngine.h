@@ -10,7 +10,7 @@
 class BoneBinderEngine : public Engine
 {
 private:
-	Shader mShader;
+	std::shared_ptr<Shader> mShader;
 	Camera mCamera;
 	Model mTestModel;
 
