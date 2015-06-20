@@ -28,7 +28,7 @@ void BoneBinderEngine::Update(const Time &engineTime)
 			0.5f) * 4.0f);
 }
 
-void BoneBinderEngine::Draw(double alpha)
+void BoneBinderEngine::Draw()
 {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

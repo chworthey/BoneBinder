@@ -18,6 +18,6 @@ public:
 	BoneBinderEngine(EngineInitialSettings settings);
 
 	void Update(const Time &engineTime) override;
-	void Draw(double alpha) override;
+	void Draw() override;
 };
 

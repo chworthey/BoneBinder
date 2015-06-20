@@ -12,7 +12,9 @@
 class Engine : public IUpdateable, public IDrawable
 {
 private:
+#if USE_PHYSICS_OPTIMIZED_ENGINE
 	const double kElapsedUpdateTime = 0.01;
+#endif
 	double mTime;
 	ShaderManager mShaderManager;
 	ContentManager mContentManager;

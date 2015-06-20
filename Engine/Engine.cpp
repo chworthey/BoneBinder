@@ -3,6 +3,8 @@
 #include "Time.h"
 #include "Model.h"
 #include <iostream>
+#include "FeatureIncludes.h"
+
 
 Engine::Engine(EngineInitialSettings settings)
 : mTime(0.0),
@@ -13,6 +15,7 @@ mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindo
 {
 }
 
+#if USE_PHYSICS_OPTIMIZED_ENGINE
 void Engine::Run()
 {
 	double previousTime = GetCurrentTime();
@@ -36,7 +39,7 @@ void Engine::Run()
 
 		while (lag >= kElapsedUpdateTime)
 		{
-			
+
 			Time t(GetCurrentTime() - startTime, kElapsedUpdateTime);
 
 			try
@@ -49,7 +52,7 @@ void Engine::Run()
 			}
 			lag -= kElapsedUpdateTime;
 		}
-		
+
 		try
 		{
 			Draw(lag / kElapsedUpdateTime);
@@ -63,6 +66,45 @@ void Engine::Run()
 		mWindow.UpdateClosed();
 	}
 }
+#else
+void Engine::Run()
+{
+	double previousTime = GetCurrentTime();
+	double lag = 0.0;
+	double startTime = previousTime;
+
+	while (!mWindow.IsClosed())
+	{
+		double currentTime = GetCurrentTime();
+		double deltaTime = currentTime - previousTime;
+
+		previousTime = currentTime;
+
+		Time t(GetCurrentTime() - startTime, deltaTime);
+
+		try
+		{
+			Update(t);
+		}
+		catch (EngineException &e)
+		{
+			mWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+		}
+
+		try
+		{
+			Draw();
+		}
+		catch (EngineException &e)
+		{
+			mWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+		}
+
+		mWindow.SwapBuffers();
+		mWindow.UpdateClosed();
+	}
+}
+#endif
 
 double Engine::GetCurrentTime() const
 {

@@ -72,6 +72,12 @@
     <ClInclude Include="MeshGLWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MathHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayWindow.cpp">
@@ -120,6 +126,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MeshGLWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MathHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
