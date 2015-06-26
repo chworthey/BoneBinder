@@ -14,7 +14,7 @@ public:
 	ENGINE_API Model();
 	ENGINE_API ~Model();
 
-	const std::vector<std::shared_ptr<MeshGLWrapper>> &GetMeshes() { return mMeshes; }
+	const std::vector<std::shared_ptr<MeshGLWrapper>> &GetMeshes() const;
 
 	void AddMesh(std::shared_ptr<MeshGLWrapper> mesh);
 };

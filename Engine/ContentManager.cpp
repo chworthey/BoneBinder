@@ -5,6 +5,7 @@
 #include "MeshGLWrapper.h"
 #include "ShaderManager.h"
 #include "Vertex.h"
+#include "Texture2D.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -83,6 +84,17 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 				}
 			}
 
+			bool hasTextureCoords = false;
+			aiVector3D *textureCoords = nullptr;
+			for (unsigned int n = 0; n < AI_MAX_NUMBER_OF_TEXTURECOORDS; n++)
+			{
+				if (mesh->HasTextureCoords(n))
+				{
+					hasTextureCoords = true;
+					textureCoords = mesh->mTextureCoords[n];
+				}
+			}
+
 			for (unsigned int n = 0; n < mesh->mNumVertices; n++)
 			{
 				aiVector3D &pos = mesh->mVertices[n];
@@ -93,10 +105,17 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 					aiColor4D &vc = vertexColors[n];
 					col = glm::vec3(vc.r, vc.g, vc.b);
 				}
+				
+				glm::vec2 texCrd(0.0f, 0.0f);
+				if (hasTextureCoords)
+				{
+					aiVector3D &vt = textureCoords[n];
+					texCrd = glm::vec2(vt.x, vt.y);
+				}
 
 				vertices.push_back(Vertex(
 					glm::vec3(pos.x, pos.y, pos.z),
-					col));
+					col, texCrd));
 			}
 
 			for (unsigned int n = 0; n < mesh->mNumFaces; n++)
@@ -135,6 +154,19 @@ std::shared_ptr<Shader> ContentManager::LoadShaderFromFile(std::string path) con
 	{
 		mDisplayWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
 		return std::shared_ptr<Shader>();
+	}
+}
+
+std::shared_ptr<Texture2D> ContentManager::LoadTextureFromFile(std::string path) const
+{
+	try
+	{
+		return std::shared_ptr<Texture2D>(new Texture2D(path));
+	}
+	catch (EngineException &e)
+	{
+		mDisplayWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+		return std::shared_ptr<Texture2D>();
 	}
 }
 

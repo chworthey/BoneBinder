@@ -11,7 +11,7 @@ Engine::Engine(EngineInitialSettings settings)
 mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindowTitle()),
 mShaderManager(),
 mContentManager(mShaderManager, mWindow),
-mRenderer(mShaderManager)
+mRenderer(mShaderManager, mWindow)
 {
 }
 

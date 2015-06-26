@@ -1,13 +1,13 @@
 #pragma once
 
 #include "EngineDLL.h"
-
-class ShaderGLWrapper;
+#include "ShaderGLWrapper.h"
 
 class ShaderManager
 {
 private:
 	ShaderGLWrapper *mCurrentShader;
+	ShaderGLWrapper mSpriteShader;
 
 public:
 	ENGINE_API ShaderManager();
@@ -15,5 +15,7 @@ public:
 
 	ENGINE_API void SetCurrentShader(ShaderGLWrapper *shader);
 	ENGINE_API ShaderGLWrapper *GetCurrentShader();
+
+	ShaderGLWrapper &GetSpriteShader();
 };
 

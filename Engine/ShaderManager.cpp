@@ -2,6 +2,7 @@
 
 
 ShaderManager::ShaderManager()
+: mSpriteShader("./Resources/spriteShader", *this)
 {
 }
 
@@ -18,4 +19,9 @@ void ShaderManager::SetCurrentShader(ShaderGLWrapper *shader)
 ShaderGLWrapper *ShaderManager::GetCurrentShader()
 {
 	return mCurrentShader;
+}
+
+ShaderGLWrapper & ShaderManager::GetSpriteShader()
+{
+	return mSpriteShader;
 }

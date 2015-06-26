@@ -15,7 +15,9 @@ mCamera(
 	GetDisplayWindow()),
 
 mTestModel(
-	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0])
+	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0]),
+
+mTestTexture("./Resources/Stupid.png")
 {
 }
 
@@ -38,8 +40,17 @@ void BoneBinderEngine::Draw()
 	glClearDepth(1.0f);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
+	glDisable(GL_BLEND);
+
 	if (mShader)
 		mShader->Bind();
 
-	GetRenderer().Render(mTestModel, mCamera);
+	GetRenderer().RenderModel(mTestModel, glm::mat4(1), mCamera);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GetRenderer().RenderTexture(mTestTexture, glm::vec2((float)GetDisplayWindow().GetWidth(), 
+		(float)GetDisplayWindow().GetHeight()) / 2.0f -
+		glm::vec2((float)mTestTexture.getWidth(), (float)mTestTexture.getHeight()) / 2.0f);
 }
