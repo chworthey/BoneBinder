@@ -92,6 +92,8 @@
     <ClInclude Include="EngineInitialSettings.h" />
     <ClInclude Include="FeatureIncludes.h" />
     <ClInclude Include="IDrawable.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputState.h" />
     <ClInclude Include="IUpdateable.h" />
     <ClInclude Include="MeshGLWrapper.h" />
     <ClInclude Include="Model.h" />
@@ -113,6 +115,8 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineException.cpp" />
     <ClCompile Include="EngineInitialSettings.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="MeshGLWrapper.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="PrimitivesHelper.cpp" />

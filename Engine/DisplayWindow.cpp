@@ -4,6 +4,7 @@
 #include "DisplayWindow.h"
 #include <GL/glew.h>
 #include <iostream>
+#include "InputManager.h"
 
 DisplayWindow::~DisplayWindow()
 {
@@ -27,10 +28,11 @@ float DisplayWindow::GetApectPixelRatio() const
 	return mWidth / (float)mHeight;
 }
 
-DisplayWindow::DisplayWindow(int width, int height, const std::string &title)
+DisplayWindow::DisplayWindow(int width, int height, const std::string &title, InputManager &inputManager)
 : mIsClosed(false),
 mWidth(width),
-mHeight(height)
+mHeight(height),
+mInputManager(inputManager)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -58,15 +60,25 @@ void DisplayWindow::SwapBuffers()
 	SDL_GL_SwapWindow(mWindow);
 }
 
-void DisplayWindow::UpdateClosed()
+void DisplayWindow::Update()
 {
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e))
 	{
-		if (e.type == SDL_QUIT)
+		switch (e.type)
 		{
+		case SDL_KEYDOWN:
+			mInputManager.DoKeyDownEvent(e.key);
+			break;
+		case SDL_KEYUP:
+			mInputManager.DoKeyUpEvent(e.key);
+			break;
+		case SDL_QUIT:
 			mIsClosed = true;
+			break;
+		default:
+			break;
 		}
 	}
 }

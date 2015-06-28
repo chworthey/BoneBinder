@@ -3,7 +3,6 @@
 #include "PrimitivesHelper.h"
 #include "Renderer.h"
 
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
 BoneBinderEngine::BoneBinderEngine(EngineInitialSettings settings)
@@ -21,7 +20,8 @@ mTestModel(
 	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0]),
 
 mTestTexture("./Resources/Stupid.png"),
-mRockTexture("./Resources/rock-cliff-texture.jpg")
+mRockTexture("./Resources/rock-cliff-texture.jpg"),
+mTestTexturePosition(0.0f, 0.0f)
 {
 }
 
@@ -32,6 +32,18 @@ void BoneBinderEngine::Update(const Time &engineTime)
 			(float)std::cos(engineTime.GetTotalTimeInSeconds()),
 			(float)std::sin(engineTime.GetTotalTimeInSeconds()), 
 			0.5f) * 4.0f);
+
+	InputState &input = GetInputState();
+	const float pixelsPerSecond = 100.0f;
+
+	if (input.GetIsKeyboardKeyDown(KeyboardKey::LEFT))
+		mTestTexturePosition.x -= (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
+	if (input.GetIsKeyboardKeyDown(KeyboardKey::RIGHT))
+		mTestTexturePosition.x += (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
+	if (input.GetIsKeyboardKeyDown(KeyboardKey::UP))
+		mTestTexturePosition.y -= (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
+	if (input.GetIsKeyboardKeyDown(KeyboardKey::DOWN))
+		mTestTexturePosition.y += (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
 }
 
 void BoneBinderEngine::Draw()
@@ -109,7 +121,5 @@ void BoneBinderEngine::Draw()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	GetRenderer().RenderTexture(mTestTexture, glm::vec2((float)GetDisplayWindow().GetWidth(), 
-		(float)GetDisplayWindow().GetHeight()) / 2.0f -
-		glm::vec2((float)mTestTexture.GetWidth(), (float)mTestTexture.GetHeight()) / 2.0f);
+	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition);
 }

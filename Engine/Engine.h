@@ -11,6 +11,8 @@
 #include "Renderer.h"
 #include "DisplayWindow.h"
 #include "ShaderManager.h"
+#include "InputManager.h"
+#include "InputState.h"
 
 class Engine : public IUpdateable, public IDrawable
 {
@@ -18,11 +20,13 @@ private:
 #if USE_PHYSICS_OPTIMIZED_ENGINE
 	const double kElapsedUpdateTime = 0.01;
 #endif
+	InputManager mInputManager;
 	DisplayWindow mWindow;
 	double mTime;
 	ShaderManager mShaderManager;
 	ContentManager mContentManager;
 	Renderer mRenderer;
+	InputState mCurrentInputState;
 
 public:
 	ENGINE_API Engine(EngineInitialSettings settings);
@@ -33,9 +37,9 @@ protected:
 	ENGINE_API const ContentManager &GetContentManager() const { return mContentManager; }
 	ENGINE_API Renderer &GetRenderer() { return mRenderer; }
 	ENGINE_API DisplayWindow &GetDisplayWindow() { return mWindow; }
+	ENGINE_API InputState &GetInputState() { return mCurrentInputState; }
 
 private:
-	void processInput();
 	void operator=(const Engine &rhs) {}
 };
 

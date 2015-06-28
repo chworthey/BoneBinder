@@ -7,11 +7,13 @@
 
 
 Engine::Engine(EngineInitialSettings settings)
-: mTime(0.0),
-mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindowTitle()),
+: mInputManager(),
+mWindow(settings.GetWindowWidth(), settings.GetWindowHeight(), settings.GetWindowTitle(), mInputManager),
+mTime(0.0),
 mShaderManager(),
 mContentManager(mShaderManager, mWindow),
-mRenderer(mShaderManager, mWindow)
+mRenderer(mShaderManager, mWindow),
+mCurrentInputState()
 {
 }
 
@@ -82,6 +84,9 @@ void Engine::Run()
 
 		Time t(GetCurrentTime() - startTime, deltaTime);
 
+		mWindow.Update();
+		mCurrentInputState = mInputManager.GenerateInputState();
+
 		try
 		{
 			Update(t);
@@ -101,7 +106,6 @@ void Engine::Run()
 		}
 
 		mWindow.SwapBuffers();
-		mWindow.UpdateClosed();
 	}
 }
 #endif
@@ -109,9 +113,4 @@ void Engine::Run()
 double Engine::GetCurrentTime() const
 {
 	return mWindow.GetTicks() / 1000.0;
-}
-
-void Engine::processInput()
-{
-
 }

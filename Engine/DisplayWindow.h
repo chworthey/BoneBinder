@@ -12,6 +12,8 @@ enum MessageType
 	ERROR_MESSAGE_TYPE
 };
 
+class InputManager;
+
 class DisplayWindow
 {
 private:
@@ -20,9 +22,10 @@ private:
 	bool mIsClosed;
 	int mWidth;
 	int mHeight;
+	InputManager &mInputManager;
 
 public:
-	ENGINE_API DisplayWindow(int width, int height, const std::string &title);
+	ENGINE_API DisplayWindow(int width, int height, const std::string &title, InputManager &inputManager);
 	ENGINE_API ~DisplayWindow();
 
 	ENGINE_API int GetWidth() const;
@@ -31,7 +34,7 @@ public:
 
 	bool IsClosed() { return mIsClosed; }
 	void SwapBuffers();
-	void UpdateClosed();
+	void Update();
 
 	Uint32 GetTicks() const;
 
@@ -39,6 +42,6 @@ public:
 
 	DisplayWindow operator=(const DisplayWindow &rhs);
 private:
-	DisplayWindow(const DisplayWindow &rhs) {}
+	DisplayWindow(const DisplayWindow &rhs) : mInputManager(rhs.mInputManager) {}
 };
 
