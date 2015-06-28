@@ -3,6 +3,7 @@
 #include <memory>
 #include "Texture2DGLWrapper.h"
 #include "EngineDLL.h"
+#include <glm/glm.hpp>
 
 class Texture2D
 {
@@ -16,5 +17,6 @@ public:
 	
 	ENGINE_API int GetWidth() const;
 	ENGINE_API int GetHeight() const;
+	ENGINE_API glm::vec2 GetTextureSize() const;
 };
 

@@ -1,5 +1,5 @@
 #include "BoneBinderEngine.h"
-#include "GL\glew.h"
+#include <GL\glew.h>
 #include "PrimitivesHelper.h"
 #include "Renderer.h"
 
@@ -69,7 +69,7 @@ void BoneBinderEngine::Draw()
 	glm::mat4 worldInverseTranspose = glm::transpose(glm::inverse(world));
 	glm::vec3 eyePosition = mCamera.GetPosition();
 	int specularPower = 22;
-	glm::vec3 emissiveColor(1.0f, 1.0f, 1.0f);
+	glm::vec3 emissiveColor = glm::vec3(GetInputState().GetMouseScrollPosition() / 50.0f);
 	glm::vec3 specularColor(0.3f, 0.3f, 0.3f);
 
 	glm::vec3 dirLight0Direction = glm::normalize(glm::vec3(1.0, 0.75, 2.0));
@@ -122,4 +122,6 @@ void BoneBinderEngine::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition);
+	GetRenderer().RenderTexture(mTestTexture, GetInputState().GetMousePosition() -
+		mTestTexture.GetTextureSize() / 2.0f);
 }

@@ -35,3 +35,12 @@ int Texture2D::GetHeight() const
 	else
 		return -1;
 }
+
+glm::vec2 Texture2D::GetTextureSize() const
+{
+	Assert(mTexture.get());
+	if (mTexture)
+		return glm::vec2(mTexture->getWidth(), mTexture->getHeight());
+	else
+		return glm::vec2();
+}

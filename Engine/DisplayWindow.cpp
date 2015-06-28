@@ -68,6 +68,16 @@ void DisplayWindow::Update()
 	{
 		switch (e.type)
 		{
+		case SDL_MOUSEWHEEL:
+			mInputManager.DoMouseWheelEvent(e.wheel);
+			break;
+		case SDL_MOUSEMOTION:
+			mInputManager.DoMouseMovementEvent(e.motion);
+			break;
+		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEBUTTONDOWN:
+			mInputManager.DoMouseButtonEvent(e.button);
+			break;
 		case SDL_KEYDOWN:
 			mInputManager.DoKeyDownEvent(e.key);
 			break;

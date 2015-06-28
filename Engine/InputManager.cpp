@@ -2,7 +2,11 @@
 #include "Assert.h"
 
 InputManager::InputManager()
-: mKeyMap()
+: mKeyMap(),
+mMouseLeftButtonDown(false),
+mMouseMiddleButtonDown(false),
+mMouseRightButtonDown(false),
+mMouseScrollPosition(0)
 {
 }
 
@@ -19,6 +23,36 @@ void InputManager::DoKeyUpEvent(const SDL_KeyboardEvent &key)
 void InputManager::DoKeyDownEvent(const SDL_KeyboardEvent &key)
 {
 	mKeyMap[key.keysym.sym] = true;
+}
+
+void InputManager::DoMouseMovementEvent(const SDL_MouseMotionEvent &movement)
+{
+	mMousePosition = glm::vec2(movement.x, movement.y);
+}
+
+void InputManager::DoMouseButtonEvent(const SDL_MouseButtonEvent &mouseDown)
+{
+	bool value = mouseDown.type == SDL_MOUSEBUTTONDOWN;
+	
+	switch (mouseDown.button)
+	{
+	case 1:
+		mMouseLeftButtonDown = value;
+		break;
+	case 2:
+		mMouseMiddleButtonDown = value;
+		break;
+	case 3:
+		mMouseRightButtonDown = value;
+		break;
+	default:
+		break;
+	}
+}
+
+void InputManager::DoMouseWheelEvent(const SDL_MouseWheelEvent &wheel)
+{
+	mMouseScrollPosition += wheel.y;
 }
 
 InputState InputManager::GenerateInputState()
@@ -178,5 +212,6 @@ InputState InputManager::GenerateInputState()
 		}
 	}
 
-	return InputState(keyMap);
+	return InputState(keyMap, mMousePosition, mMouseLeftButtonDown, mMouseMiddleButtonDown, mMouseRightButtonDown,
+		mMouseScrollPosition);
 }

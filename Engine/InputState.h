@@ -2,6 +2,7 @@
 
 #include "EngineDLL.h"
 #include <map>
+#include <glm/glm.hpp>
 
 namespace KeyboardKey
 {
@@ -14,13 +15,32 @@ namespace KeyboardKey
 	};
 }
 
+namespace MouseButton
+{
+	enum MouseButton
+	{
+		LEFT, MIDDLE, RIGHT
+	};
+}
+
 class InputState
 {
 private:
 	std::map<KeyboardKey::KeyboardKey, bool> mKeyMap;
+	glm::vec2 mMousePosition;
+	bool mMouseLeftButtonDown;
+	bool mMouseMiddleButtonDown;
+	bool mMouseRightButtonDown;
+	int mMouseScrollPosition;
+
 public:
 	InputState();
-	InputState(std::map<KeyboardKey::KeyboardKey, bool> keyMap);
+	InputState(std::map<KeyboardKey::KeyboardKey, bool> keyMap, glm::vec2 mousePosition,
+		bool mouseLeftButtonDown, bool mouseMiddleButtonDown, bool mouseRightButtonDown,
+		int mouseScrollPosition);
 	ENGINE_API bool GetIsKeyboardKeyDown(const KeyboardKey::KeyboardKey &key);
+	ENGINE_API glm::vec2 GetMousePosition() const;
+	ENGINE_API bool GetIsMouseButtonDown(const MouseButton::MouseButton &button);
+	ENGINE_API int GetMouseScrollPosition() const;
 };
 
