@@ -1,5 +1,8 @@
 #pragma once
 
+//@hack: glm invert and transpose will not work without this
+#define assert(bool)
+
 #include "EngineDLL.h"
 #include "IUpdateable.h"
 #include "IDrawable.h"

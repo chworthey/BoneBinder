@@ -38,7 +38,7 @@ void Renderer::RenderModel(const Model &model, const glm::mat4 &world, const Cam
 
 void Renderer::RenderTexture(Texture2D &texture, const glm::vec2 &position)
 {
-	texture.bind();
+	texture.Bind();
 	mShaderManager.GetSpriteShader().Bind();
 
 	auto shader = mShaderManager.GetCurrentShader();
@@ -47,26 +47,30 @@ void Renderer::RenderTexture(Texture2D &texture, const glm::vec2 &position)
 		* glm::translate(glm::vec3(position, 0));
 	shader->SetModelViewProjectionMatrixUniform(mvp);
 
-	float texWidth = (float)texture.getWidth();
-	float texHeight = (float)texture.getHeight();
+	float texWidth = (float)texture.GetWidth();
+	float texHeight = (float)texture.GetHeight();
 
 	Model quad = PrimitivesHelper::CreateQuad(
 		Vertex(
 			glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3(1.0f, 1.0f, 1.0f),
-			glm::vec2(0.0f, 1.0f)),
+			glm::vec2(0.0f, 1.0f),
+			glm::vec3(0.0f, 0.0f, 1.0f)),
 		Vertex(
 			glm::vec3(texWidth, 0.0f, 0),
 			glm::vec3(1.0f, 1.0f, 1.0f),
-			glm::vec2(1.0f, 1.0f)),
+			glm::vec2(1.0f, 1.0f),
+			glm::vec3(0.0f, 0.0f, 1.0f)),
 		Vertex(
 			glm::vec3(texWidth, texHeight, 0),
 			glm::vec3(1.0f, 1.0f, 1.0f),
-			glm::vec2(1.0f, 0.0f)),
+			glm::vec2(1.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 1.0f)),
 		Vertex(
 			glm::vec3(0.0f, texHeight, 0),
 			glm::vec3(1.0f, 1.0f, 1.0f),
-			glm::vec2(0.0f, 0.0f)));
+			glm::vec2(0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 1.0f)));
 
 	auto meshes = quad.GetMeshes();
 

@@ -26,6 +26,11 @@ void MeshGLWrapper::Initialize(std::vector<Vertex> &vertices, std::vector<unsign
 	glBufferData(GL_ARRAY_BUFFER, mVertexCount * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(TEXTURE_COORD_VERTEX_BUFFER, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(sizeof(glm::vec3) * 2));
 
+	glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjects[NORMAL_VERTEX_BUFFER]);
+	glBufferData(GL_ARRAY_BUFFER, mVertexCount * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(NORMAL_VERTEX_BUFFER, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(sizeof(glm::vec3) * 2 +
+		sizeof(glm::vec2)));
+
 	glGenBuffers(1, &mIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
@@ -33,6 +38,7 @@ void MeshGLWrapper::Initialize(std::vector<Vertex> &vertices, std::vector<unsign
 	glEnableVertexAttribArray(POSITION_VERTEX_BUFFER);
 	glEnableVertexAttribArray(COLOR_VERTEX_BUFFER);
 	glEnableVertexAttribArray(TEXTURE_COORD_VERTEX_BUFFER);
+	glEnableVertexAttribArray(NORMAL_VERTEX_BUFFER);
 	glBindVertexArray(0);
 }
 

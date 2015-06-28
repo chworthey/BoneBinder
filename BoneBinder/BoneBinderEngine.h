@@ -15,6 +15,7 @@ private:
 	Camera mCamera;
 	Model mTestModel;
 	Texture2D mTestTexture;
+	Texture2D mRockTexture;
 
 public:
 	BoneBinderEngine(EngineInitialSettings settings);

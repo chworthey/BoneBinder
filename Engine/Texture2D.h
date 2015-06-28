@@ -12,9 +12,9 @@ public:
 	ENGINE_API Texture2D(std::string fileName);
 	ENGINE_API ~Texture2D();
 
-	void bind();
+	ENGINE_API void Bind();
 	
-	ENGINE_API int getWidth() const;
-	ENGINE_API int getHeight() const;
+	ENGINE_API int GetWidth() const;
+	ENGINE_API int GetHeight() const;
 };
 

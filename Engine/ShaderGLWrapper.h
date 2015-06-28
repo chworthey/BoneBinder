@@ -31,6 +31,7 @@ public:
 	ENGINE_API virtual ~ShaderGLWrapper();
 
 	void SetModelViewProjectionMatrixUniform(glm::mat4 mvp);
+	GLuint GetUniformLocation(std::string name);
 
 private:
 	void checkShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string &errorMesage);

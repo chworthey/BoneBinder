@@ -11,14 +11,14 @@ Texture2D::~Texture2D()
 {
 }
 
-void Texture2D::bind()
+void Texture2D::Bind()
 {
 	Assert(mTexture.get());
 	if (mTexture)
 		mTexture->Bind();
 }
 
-int Texture2D::getWidth() const
+int Texture2D::GetWidth() const
 {
 	Assert(mTexture.get());
 	if (mTexture)
@@ -27,7 +27,7 @@ int Texture2D::getWidth() const
 		return -1;
 }
 
-int Texture2D::getHeight() const
+int Texture2D::GetHeight() const
 {
 	Assert(mTexture.get());
 	if (mTexture)

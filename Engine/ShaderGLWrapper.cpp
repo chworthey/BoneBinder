@@ -47,6 +47,10 @@ void ShaderGLWrapper::SetModelViewProjectionMatrixUniform(glm::mat4 mvp)
 	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &mvp[0][0]);
 }
 
+GLuint ShaderGLWrapper::GetUniformLocation(std::string name)
+{
+	return glGetUniformLocation(mProgram, name.c_str());
+}
 
 void ShaderGLWrapper::checkShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string &errorMesage)
 {

@@ -67,6 +67,11 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 				throwLoadException("Mesh " + meshName + " has no positions.");
 			}
 
+			if (!mesh->HasNormals())
+			{
+				throwLoadException("Mesh " + meshName + " has no normals.");
+			}
+
 			Model model;
 
 			std::vector<Vertex> vertices;
@@ -113,9 +118,13 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 					texCrd = glm::vec2(vt.x, vt.y);
 				}
 
+				aiVector3D &normalV = mesh->mNormals[n];
+
+				glm::vec3 normal = glm::vec3(normalV.x, normalV.y, normalV.z);
+
 				vertices.push_back(Vertex(
 					glm::vec3(pos.x, pos.y, pos.z),
-					col, texCrd));
+					col, texCrd, normal));
 			}
 
 			for (unsigned int n = 0; n < mesh->mNumFaces; n++)
