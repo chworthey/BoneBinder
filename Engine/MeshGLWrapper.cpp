@@ -45,6 +45,8 @@ void MeshGLWrapper::Initialize(std::vector<Vertex> &vertices, std::vector<unsign
 MeshGLWrapper::~MeshGLWrapper()
 {
 	glDeleteVertexArrays(1, &mVertexArrayObject);
+	glDeleteBuffers(NUM_VERTEX_BUFFERS, mVertexBufferObjects);
+	glDeleteBuffers(1, &mIndexBuffer);
 }
 
 void MeshGLWrapper::Draw() const

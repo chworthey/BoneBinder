@@ -8,6 +8,7 @@
 #include "PrimitivesHelper.h"
 #include "Texture2D.h"
 #include "glm/gtx/transform.hpp"
+#include "Font.h"
 
 Renderer::Renderer(ShaderManager &shaderManager, DisplayWindow &displayWindow)
 : mShaderManager(shaderManager),
@@ -39,16 +40,35 @@ void Renderer::RenderModel(const Model &model, const glm::mat4 &world, const Cam
 void Renderer::RenderTexture(Texture2D &texture, const glm::vec2 &position)
 {
 	texture.Bind();
+	renderTexturedQuad(position, texture.GetTextureSize());
+}
+
+void Renderer::RenderText(Font &font, const std::string &text, const glm::vec2 &position)
+{
+	glm::vec2 pos = position;
+	for (auto ch : text)
+	{
+		int advancement = 0;
+		glm::vec2 textureSize(0.0f, 0.0f);
+		glm::vec2 positionOffset(0.0f, 0.0f);
+		font.BindCharacterTexture(ch, advancement, textureSize, positionOffset);
+		renderTexturedQuad(pos + positionOffset, textureSize);
+		pos.x += advancement;
+	}
+}
+
+void Renderer::renderTexturedQuad(const glm::vec2 position, const glm::vec2 textureSize)
+{
 	mShaderManager.GetSpriteShader().Bind();
 
 	auto shader = mShaderManager.GetCurrentShader();
 
-	glm::mat4 mvp = glm::ortho(0.0f, (float)mDisplayWindow.GetWidth(), (float)mDisplayWindow.GetHeight(), 0.0f) 
+	glm::mat4 mvp = glm::ortho(0.0f, (float)mDisplayWindow.GetWidth(), (float)mDisplayWindow.GetHeight(), 0.0f)
 		* glm::translate(glm::vec3(position, 0));
 	shader->SetModelViewProjectionMatrixUniform(mvp);
 
-	float texWidth = (float)texture.GetWidth();
-	float texHeight = (float)texture.GetHeight();
+	float texWidth = textureSize.x;
+	float texHeight = textureSize.y;
 
 	Model quad = PrimitivesHelper::CreateQuad(
 		Vertex(

@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "Time.h"
 #include "Texture2D.h"
+#include "Font.h"
 #include <glm/glm.hpp>
 
 class BoneBinderEngine : public Engine
@@ -18,6 +19,9 @@ private:
 	Texture2D mTestTexture;
 	Texture2D mRockTexture;
 	glm::vec2 mTestTexturePosition;
+	Font mFont;
+	double mElapsedTime;
+	double mLastUpdateTime;
 
 public:
 	BoneBinderEngine(EngineInitialSettings settings);

@@ -87,6 +87,12 @@
     <ClInclude Include="InputState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextGLWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayWindow.cpp">
@@ -147,6 +153,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontGLWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

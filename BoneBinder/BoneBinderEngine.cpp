@@ -21,7 +21,10 @@ mTestModel(
 
 mTestTexture("./Resources/Stupid.png"),
 mRockTexture("./Resources/rock-cliff-texture.jpg"),
-mTestTexturePosition(0.0f, 0.0f)
+mTestTexturePosition(0.0f, 0.0f),
+mFont("./Resources/times.ttf", 12.0f),
+mElapsedTime(0.0),
+mLastUpdateTime(0.0)
 {
 }
 
@@ -44,6 +47,12 @@ void BoneBinderEngine::Update(const Time &engineTime)
 		mTestTexturePosition.y -= (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
 	if (input.GetIsKeyboardKeyDown(KeyboardKey::DOWN))
 		mTestTexturePosition.y += (float)engineTime.GetElapsedTimeInSeconds() * pixelsPerSecond;
+
+	if (engineTime.GetTotalTimeInSeconds() - mLastUpdateTime >= 1.0)
+	{
+		mLastUpdateTime = engineTime.GetTotalTimeInSeconds();
+		mElapsedTime = engineTime.GetElapsedTimeInSeconds();
+	}
 }
 
 void BoneBinderEngine::Draw()
@@ -124,4 +133,6 @@ void BoneBinderEngine::Draw()
 	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition);
 	GetRenderer().RenderTexture(mTestTexture, GetInputState().GetMousePosition() -
 		mTestTexture.GetTextureSize() / 2.0f);
+
+	GetRenderer().RenderText(mFont, "FPS: " + std::to_string(1.0 / mElapsedTime), glm::vec2(0.0f, 0.0f));
 }
