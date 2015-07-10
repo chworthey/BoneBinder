@@ -37,13 +37,13 @@ void Renderer::RenderModel(const Model &model, const glm::mat4 &world, const Cam
 		mesh->Draw();
 }
 
-void Renderer::RenderTexture(Texture2D &texture, const glm::vec2 &position)
+void Renderer::RenderTexture(Texture2D &texture, const glm::vec2 &position, const glm::vec4 &color)
 {
 	texture.Bind();
-	renderTexturedQuad(position, texture.GetTextureSize());
+	renderTexturedQuad(position, texture.GetTextureSize(), color);
 }
 
-void Renderer::RenderText(Font &font, const std::string &text, const glm::vec2 &position)
+void Renderer::RenderText(Font &font, const std::string &text, const glm::vec2 &position, const glm::vec4 &color)
 {
 	glm::vec2 pos = position;
 	for (auto ch : text)
@@ -52,12 +52,12 @@ void Renderer::RenderText(Font &font, const std::string &text, const glm::vec2 &
 		glm::vec2 textureSize(0.0f, 0.0f);
 		glm::vec2 positionOffset(0.0f, 0.0f);
 		font.BindCharacterTexture(ch, advancement, textureSize, positionOffset);
-		renderTexturedQuad(pos + positionOffset, textureSize);
+		renderTexturedQuad(pos + positionOffset, textureSize, color);
 		pos.x += advancement;
 	}
 }
 
-void Renderer::renderTexturedQuad(const glm::vec2 position, const glm::vec2 textureSize)
+void Renderer::renderTexturedQuad(const glm::vec2 &position, const glm::vec2 &textureSize, const glm::vec4 &color)
 {
 	mShaderManager.GetSpriteShader().Bind();
 
@@ -66,6 +66,7 @@ void Renderer::renderTexturedQuad(const glm::vec2 position, const glm::vec2 text
 	glm::mat4 mvp = glm::ortho(0.0f, (float)mDisplayWindow.GetWidth(), (float)mDisplayWindow.GetHeight(), 0.0f)
 		* glm::translate(glm::vec3(position, 0));
 	shader->SetModelViewProjectionMatrixUniform(mvp);
+	glUniform4fv(shader->GetUniformLocation("SpriteColor"), 1, &color[0]);
 
 	float texWidth = textureSize.x;
 	float texHeight = textureSize.y;

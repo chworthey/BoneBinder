@@ -1,6 +1,7 @@
 #version 330 core
 
 in vec2 Texcoord;
+in vec4 spriteColor;
 
 out vec4 color;
 
@@ -8,5 +9,5 @@ uniform sampler2D tex;
 
 void main()
 {
-	color = texture(tex, Texcoord);
+	color = texture(tex, Texcoord) * spriteColor;
 }

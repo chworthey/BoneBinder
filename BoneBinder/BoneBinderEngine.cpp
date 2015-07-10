@@ -130,9 +130,11 @@ void BoneBinderEngine::Draw()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition);
+	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition, glm::vec4(1.0f));
 	GetRenderer().RenderTexture(mTestTexture, GetInputState().GetMousePosition() -
-		mTestTexture.GetTextureSize() / 2.0f);
+		mTestTexture.GetTextureSize() / 2.0f, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
 
-	GetRenderer().RenderText(mFont, "FPS: " + std::to_string(1.0 / mElapsedTime), glm::vec2(0.0f, 0.0f));
+	double fps = 1.0 / mElapsedTime;
+	GetRenderer().RenderText(mFont, "FPS: " + std::to_string(fps), glm::vec2(0.0f, 0.0f),
+		fps >= 30.0 ? glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) : glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 }
