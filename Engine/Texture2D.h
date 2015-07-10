@@ -10,7 +10,7 @@ class Texture2D
 private:
 	std::shared_ptr<Texture2DGLWrapper> mTexture;
 public:
-	ENGINE_API Texture2D(std::string fileName);
+	Texture2D(std::string fileName);
 	ENGINE_API ~Texture2D();
 
 	ENGINE_API void Bind();

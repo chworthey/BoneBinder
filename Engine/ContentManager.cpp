@@ -1,6 +1,7 @@
 #include "Assert.h"
 #include "ContentManager.h"
 #include "DisplayWindow.h"
+#include "Font.h"
 #include "Model.h" 
 #include "MeshGLWrapper.h"
 #include "ShaderManager.h"
@@ -22,7 +23,7 @@ ContentManager::~ContentManager()
 {
 }
 
-ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string path) const
+ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(const std::string &path) const
 {
 	try
 	{
@@ -153,7 +154,7 @@ ENGINE_API std::vector<Model> ContentManager::LoadModelsFromFile(std::string pat
 	}
 }
 
-std::shared_ptr<Shader> ContentManager::LoadShaderFromFile(std::string path) const
+std::shared_ptr<Shader> ContentManager::LoadShaderFromFile(const std::string &path) const
 {
 	try
 	{
@@ -166,7 +167,7 @@ std::shared_ptr<Shader> ContentManager::LoadShaderFromFile(std::string path) con
 	}
 }
 
-std::shared_ptr<Texture2D> ContentManager::LoadTextureFromFile(std::string path) const
+std::shared_ptr<Texture2D> ContentManager::LoadTextureFromFile(const std::string &path) const
 {
 	try
 	{
@@ -176,6 +177,19 @@ std::shared_ptr<Texture2D> ContentManager::LoadTextureFromFile(std::string path)
 	{
 		mDisplayWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
 		return std::shared_ptr<Texture2D>();
+	}
+}
+
+std::shared_ptr<Font> ContentManager::LoadFontFromFile(const std::string &path, float fontSize) const
+{
+	try
+	{
+		return std::shared_ptr<Font>(new Font(path, fontSize));
+	}
+	catch (EngineException &e)
+	{
+		mDisplayWindow.ShowNotificationMessageBox(e.What(), MessageType::ERROR_MESSAGE_TYPE);
+		return std::shared_ptr<Font>();
 	}
 }
 

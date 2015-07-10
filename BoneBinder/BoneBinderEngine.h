@@ -15,11 +15,11 @@ class BoneBinderEngine : public Engine
 private:
 	std::shared_ptr<Shader> mShader;
 	Camera mCamera;
-	Model mTestModel;
-	Texture2D mTestTexture;
-	Texture2D mRockTexture;
+	std::vector<Model> mTestModels;
+	std::shared_ptr<Texture2D> mTestTexture;
+	std::shared_ptr<Texture2D> mRockTexture;
 	glm::vec2 mTestTexturePosition;
-	Font mFont;
+	std::shared_ptr<Font> mFont;
 	double mElapsedTime;
 	double mLastUpdateTime;
 

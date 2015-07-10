@@ -16,13 +16,13 @@ mCamera(
 	45.0f, 
 	GetDisplayWindow()),
 
-mTestModel(
-	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0]),
+mTestModels(
+	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")),
 	// comment
-mTestTexture("./Resources/Stupid.png"),
-mRockTexture("./Resources/rock-cliff-texture.jpg"),
+mTestTexture(GetContentManager().LoadTextureFromFile("./Resources/Stupid.png")),
+mRockTexture(GetContentManager().LoadTextureFromFile("./Resources/rock-cliff-texture.jpg")),
 mTestTexturePosition(0.0f, 0.0f),
-mFont("./Resources/times.ttf", 12.0f),
+mFont(GetContentManager().LoadFontFromFile("./Resources/times.ttf", 12.0f)),
 mElapsedTime(0.0),
 mLastUpdateTime(0.0)
 {
@@ -67,10 +67,10 @@ void BoneBinderEngine::Draw()
 
 	glDisable(GL_BLEND);
 
-	if (!mShader)
+	if (!mShader || !mRockTexture || !mFont)
 		return;
 
-	mRockTexture.Bind();
+	mRockTexture->Bind();
 	mShader->Bind();
 	
 	glm::vec4 diffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -125,16 +125,17 @@ void BoneBinderEngine::Draw()
 	uniformLocation = mShader->GetUniformLocation("DirLight2SpecularColor");
 	glUniform3fv(uniformLocation, 1, &dirLight2SpecularColor[0]);
 
-	GetRenderer().RenderModel(mTestModel, glm::mat4(1), mCamera);
+	for (Model &model : mTestModels)
+		GetRenderer().RenderModel(model, glm::mat4(1), mCamera);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	GetRenderer().RenderTexture(mTestTexture, mTestTexturePosition, glm::vec4(1.0f));
-	GetRenderer().RenderTexture(mTestTexture, GetInputState().GetMousePosition() -
-		mTestTexture.GetTextureSize() / 2.0f, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	GetRenderer().RenderTexture(*mTestTexture, mTestTexturePosition, glm::vec4(1.0f));
+	GetRenderer().RenderTexture(*mTestTexture, GetInputState().GetMousePosition() -
+		mTestTexture->GetTextureSize() / 2.0f, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
 
 	double fps = 1.0 / mElapsedTime;
-	GetRenderer().RenderText(mFont, "FPS: " + std::to_string(fps), glm::vec2(0.0f, 0.0f),
+	GetRenderer().RenderText(*mFont, "FPS: " + std::to_string(fps), glm::vec2(0.0f, 0.0f),
 		fps >= 30.0 ? glm::vec4(0.0f, 1.0f, 0.0f, 1.0f) : glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 }
