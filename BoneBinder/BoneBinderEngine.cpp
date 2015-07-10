@@ -24,8 +24,12 @@ mRockTexture(GetContentManager().LoadTextureFromFile("./Resources/rock-cliff-tex
 mTestTexturePosition(0.0f, 0.0f),
 mFont(GetContentManager().LoadFontFromFile("./Resources/times.ttf", 12.0f)),
 mElapsedTime(0.0),
-mLastUpdateTime(0.0)
+mLastUpdateTime(0.0),
+mControlManager(GetContentManager(), GetRenderer()),
+mMenuBar()
 {
+	if (mFont)
+		mMenuBar = mControlManager.CreateMenuBar(GetDisplayWindow(), *mFont);
 }
 
 void BoneBinderEngine::Update(const Time &engineTime)
@@ -60,14 +64,14 @@ void BoneBinderEngine::Draw()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	glClearColor(0.0f, 0.0f, 0.0, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearDepth(1.0f);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	glDisable(GL_BLEND);
 
-	if (!mShader || !mRockTexture || !mFont)
+	if (!mShader || !mRockTexture || !mFont || !mMenuBar)
 		return;
 
 	mRockTexture->Bind();
@@ -132,6 +136,9 @@ void BoneBinderEngine::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	GetRenderer().RenderTexture(*mTestTexture, mTestTexturePosition, glm::vec4(1.0f));
+
+	mMenuBar->Draw();
+
 	GetRenderer().RenderTexture(*mTestTexture, GetInputState().GetMousePosition() -
 		mTestTexture->GetTextureSize() / 2.0f, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
 

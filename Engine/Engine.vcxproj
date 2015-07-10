@@ -99,6 +99,7 @@
     <ClInclude Include="MeshGLWrapper.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PrimitivesHelper.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderGLWrapper.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="MeshGLWrapper.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="PrimitivesHelper.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderGLWrapper.cpp" />

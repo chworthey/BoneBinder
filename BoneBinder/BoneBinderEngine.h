@@ -8,6 +8,8 @@
 #include "Time.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include "ControlManager.h"
+#include "MenuBar.h"
 #include <glm/glm.hpp>
 
 class BoneBinderEngine : public Engine
@@ -22,6 +24,8 @@ private:
 	std::shared_ptr<Font> mFont;
 	double mElapsedTime;
 	double mLastUpdateTime;
+	ControlManager mControlManager;
+	std::shared_ptr<MenuBar> mMenuBar;
 
 public:
 	BoneBinderEngine(EngineInitialSettings settings);

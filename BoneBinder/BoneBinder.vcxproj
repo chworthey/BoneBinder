@@ -96,10 +96,16 @@ copy "..\dlls\FreeImage.dll" "$(TargetDir)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoneBinderEngine.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="ControlManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoneBinderEngine.h" />
+    <ClInclude Include="Control.h" />
+    <ClInclude Include="ControlManager.h" />
+    <ClInclude Include="MenuBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
