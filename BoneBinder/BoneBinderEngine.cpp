@@ -18,7 +18,7 @@ mCamera(
 
 mTestModel(
 	GetContentManager().LoadModelsFromFile("./Resources/TestModel3.fbx")[0]),
-
+	// comment
 mTestTexture("./Resources/Stupid.png"),
 mRockTexture("./Resources/rock-cliff-texture.jpg"),
 mTestTexturePosition(0.0f, 0.0f),
